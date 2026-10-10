@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Coach Sportif',
+          'FitLife',
         ),
         backgroundColor: Colors.deepPurple.shade50,
       ),

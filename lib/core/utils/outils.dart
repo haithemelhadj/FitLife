@@ -102,13 +102,16 @@ Widget elementMenu(
             color: Colors.deepPurple,
           ),
 
-          Container(
-            margin: const EdgeInsets.only(left: 14),
+          // Expanded : le texte passe à la ligne au lieu de déborder.
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(left: 14),
 
-            child: Text(
-              titre,
-              style: const TextStyle(
-                fontSize: 15,
+              child: Text(
+                titre,
+                style: const TextStyle(
+                  fontSize: 15,
+                ),
               ),
             ),
           ),
@@ -140,7 +143,7 @@ Widget construireDrawer(BuildContext context) {
               ),
 
               Text(
-                'COACH SPORTIF',
+                'FITLIFE',
                 style: TextStyle(
                   fontSize: 22,
                   color: Colors.white,
@@ -148,7 +151,7 @@ Widget construireDrawer(BuildContext context) {
               ),
 
               Text(
-                'Gestion des événements',
+                'Coaching sportif',
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.white,
@@ -217,6 +220,56 @@ Widget construireDrawer(BuildContext context) {
                 'Paiements',
                 Icons.payment,
                 '/paiements',
+              ),
+            ],
+          ),
+        ),
+
+        // BLOC ENTRAÎNEMENT
+        Container(
+          margin: const EdgeInsets.only(
+            top: 20,
+            bottom: 8,
+          ),
+
+          child: const Text(
+            'ENTRAÎNEMENT',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.deepPurple,
+            ),
+          ),
+        ),
+
+        Card(
+          child: Column(
+            children: [
+              elementMenu(
+                context,
+                'Exploration musculaire',
+                Icons.accessibility_new,
+                '/corps',
+              ),
+
+              elementMenu(
+                context,
+                'Programmes',
+                Icons.fitness_center,
+                '/programmes',
+              ),
+
+              elementMenu(
+                context,
+                'Entraînement (bas)',
+                Icons.vertical_align_bottom,
+                '/entrainement-bas',
+              ),
+
+              elementMenu(
+                context,
+                'Entraînement (haut)',
+                Icons.tab,
+                '/entrainement-onglets',
               ),
             ],
           ),
