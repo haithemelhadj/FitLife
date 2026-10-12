@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 
 import '../../data/models/categorie.dart';
 import '../../data/models/evenement.dart';
@@ -146,7 +147,7 @@ class _CategorieFormScreenState extends State<CategorieFormScreen> {
       return const Text('Aucun événement : créez-en un d’abord.');
     }
 
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         itemCount: evenements.length,
@@ -215,8 +216,7 @@ class _CategorieFormScreenState extends State<CategorieFormScreen> {
           key: formKey,
           child: ListView(
             // Garde tous les champs construits (voir evenement_form_screen).
-            cacheExtent: 3000,
-            padding: const EdgeInsets.only(bottom: 40),
+            scrollCacheExtent: ScrollCacheExtent.pixels(3000), padding: const EdgeInsets.only(bottom: 40),
             children: [
               TextFormField(
                 initialValue: nom,

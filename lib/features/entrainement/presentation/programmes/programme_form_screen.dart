@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:coach_app/core/utils/outils.dart';
@@ -218,8 +219,7 @@ class _ProgrammeFormScreenState extends State<ProgrammeFormScreen> {
           key: formKey,
           child: ListView(
             // Garde tous les champs construits (voir evenement_form_screen).
-            cacheExtent: 3000,
-            padding: const EdgeInsets.only(bottom: 40),
+            scrollCacheExtent: ScrollCacheExtent.pixels(3000), padding: const EdgeInsets.only(bottom: 40),
             children: [
               TextFormField(
                 initialValue: nom,

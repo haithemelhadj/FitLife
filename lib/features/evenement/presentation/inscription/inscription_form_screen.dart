@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 
 // Votre fichier est dans features/evenement/presentation/inscription/
 // ../../          = remonte jusqu'à evenement/
@@ -202,6 +203,8 @@ class _InscriptionFormScreenState extends State<InscriptionFormScreen> {
         List<Inscription> liste = await inscriptionRepository
             .getInscriptionsByEvenement(idEvenement);
 
+        if (!mounted) return;
+
         if (!placeDisponible(evenement, liste)) {
           afficherMessage(
             context,
@@ -284,7 +287,7 @@ class _InscriptionFormScreenState extends State<InscriptionFormScreen> {
       return const Text('Aucun événement : créez-en un d’abord.');
     }
 
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         itemCount: evenements.length,
@@ -374,7 +377,7 @@ class _InscriptionFormScreenState extends State<InscriptionFormScreen> {
     // Âge saisi (null tant que le champ est vide ou invalide).
     int? ageSaisi = int.tryParse(ageTexte);
 
-    return Container(
+    return SizedBox(
       height: 240,
       child: ListView.builder(
         itemCount: categories.length,
@@ -516,8 +519,7 @@ class _InscriptionFormScreenState extends State<InscriptionFormScreen> {
           key: formKey,
           child: ListView(
             // Garde tous les champs construits (voir evenement_form_screen).
-            cacheExtent: 3000,
-            padding: const EdgeInsets.only(bottom: 40),
+            scrollCacheExtent: ScrollCacheExtent.pixels(3000), padding: const EdgeInsets.only(bottom: 40),
             children: [
               titreSection('Choisir un événement'),
               choixEvenement(),

@@ -207,7 +207,7 @@ class _PaiementFormScreenState extends State<PaiementFormScreen> {
       return const Text('Aucune inscription : créez-en une d’abord.');
     }
 
-    return Container(
+    return SizedBox(
       height: 260,
       child: ListView.builder(
         itemCount: inscriptions.length,

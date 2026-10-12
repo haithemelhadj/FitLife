@@ -1,4 +1,4 @@
-library muscle_mapper;
+library;
 
 export 'models/anatomy_asset_provider.dart';
 export 'models/anatomy_models.dart';

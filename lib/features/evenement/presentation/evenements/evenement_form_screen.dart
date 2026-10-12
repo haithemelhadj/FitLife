@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 
 import '../../data/models/evenement.dart';
 import '../../data/repositories/evenement_repository.dart';
@@ -231,8 +232,7 @@ class _EvenementFormScreenState extends State<EvenementFormScreen> {
           child: ListView(
             // Garde tous les champs construits : sans cela, un TextFormField
             // sorti de l'écran serait détruit et ne serait plus validé.
-            cacheExtent: 3000,
-            padding: const EdgeInsets.only(bottom: 40),
+            scrollCacheExtent: ScrollCacheExtent.pixels(3000), padding: const EdgeInsets.only(bottom: 40),
             children: [
               TextFormField(
                 initialValue: nom,
