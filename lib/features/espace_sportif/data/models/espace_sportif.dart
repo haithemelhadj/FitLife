@@ -56,7 +56,7 @@ class EspaceSportif {
     email: json['email'] as String?,
     siteWeb: json['site_web'] as String?,
     statut: StatutEspace.depuisCode(json['statut'] as String),
-    idGestionnaire: json['id_gestionnaire'] as String,
+    idGestionnaire: json['id_gestionnaire'] as String?,
   );
 
   // La base détermine le gestionnaire et conserve les identifiants.

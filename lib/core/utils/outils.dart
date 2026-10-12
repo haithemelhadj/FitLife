@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../features/auth/domain/session_app.dart';
 
 // Afficher un message en bas de l'écran.
 void afficherMessage(BuildContext context, String texte) {
@@ -124,11 +125,30 @@ Widget elementMenu(
 // Drawer commun à tous les écrans.
 // Chapitre 5 : Drawer.
 Widget construireDrawer(BuildContext context) {
+  final session = SessionScope.peutEtre(context);
+  if (session?.mode == ModeSession.invite) {
+    return Drawer(child: SafeArea(child: ListView(children: [
+      const ListTile(title: Text('FitLife · Invité'), subtitle: Text('Consultation des espaces publics')),
+      elementMenu(context, 'Accueil', Icons.home, '/'),
+      elementMenu(context, 'Espaces sportifs', Icons.sports_handball, '/espaces-sportifs'),
+      ListTile(title: const Text('Se connecter'), leading: const Icon(Icons.login), onTap: () {
+        Navigator.pop(context); session!.quitter();
+      }),
+    ])));
+  }
   return Drawer(
     child: ListView(
       padding: const EdgeInsets.all(12),
 
       children: [
+        if (session?.administrateur == true)
+          Padding(padding: const EdgeInsets.only(top: 24), child: FilledButton.icon(
+            onPressed: () { Navigator.pop(context); Navigator.pushNamed(context, '/dashboard'); },
+            icon: const Icon(Icons.dashboard), label: const Text('Dashboard'))),
+        if (session != null)
+          ListTile(title: const Text('Se déconnecter'), leading: const Icon(Icons.logout), onTap: () {
+            Navigator.pop(context); session.quitter();
+          }),
         // HEADER
         Container(
           padding: const EdgeInsets.all(20),
@@ -199,6 +219,13 @@ Widget construireDrawer(BuildContext context) {
                 'Événements',
                 Icons.event,
                 '/evenements',
+              ),
+
+              elementMenu(
+                context,
+                'Espaces sportifs',
+                Icons.sports_handball,
+                '/espaces-sportifs',
               ),
 
               elementMenu(

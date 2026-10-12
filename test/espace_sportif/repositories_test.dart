@@ -8,6 +8,7 @@ import 'package:coach_app/features/espace_sportif/data/models/espace_sportif.dar
 import 'package:coach_app/features/espace_sportif/data/models/offre.dart';
 import 'package:coach_app/features/espace_sportif/data/repositories/abonnement_repository.dart';
 import 'package:coach_app/features/espace_sportif/data/repositories/espace_sportif_repository.dart';
+import 'package:coach_app/features/espace_sportif/data/repositories/espace_public_repository.dart';
 import 'package:coach_app/features/espace_sportif/data/repositories/offre_repository.dart';
 import 'package:coach_app/features/espace_sportif/domain/valeurs.dart';
 
@@ -124,6 +125,50 @@ void main() {
     expect(requetes.first.corps.containsKey('id_espace'), isFalse);
     expect(requetes.last.chemin, '/rest/v1/offres_lecture');
     expect(resultat.prix.millimes, 125);
+  });
+
+  test(
+    'La désactivation ne remplace pas les autres champs de l’espace',
+    () async {
+      reponse = (requete) {
+        expect(requete.uri.queryParameters['id_espace'], 'eq.7');
+        return {
+          'id_espace': 7,
+          'nom': 'Nom récent',
+          'adresse': 'Tunis',
+          'type': 'SALLE',
+          'statut': 'INACTIF',
+          'id_gestionnaire': 'gestionnaire',
+        };
+      };
+      final espace = await EspaceSportifRepository(client)
+          .changerStatut(7, StatutEspace.inactif);
+      expect(requetes.single.methode, 'PATCH');
+      expect(requetes.single.corps, {'statut': 'INACTIF'});
+      expect(espace.nom, 'Nom récent');
+      expect(espace.statut, StatutEspace.inactif);
+    },
+  );
+
+  test('Le catalogue invité utilise le RPC public et ne reçoit pas le gestionnaire', () async {
+    reponse = (_) => [
+      {
+        'id_espace': 1,
+        'nom': 'Salle',
+        'adresse': 'Tunis',
+        'type': 'SALLE',
+        'statut': 'ACTIF',
+      },
+    ];
+    final depot = EspacePublicRepository(client);
+    final espaces = await depot.rechercher(recherche: 'Salle');
+    expect(requetes.single.chemin, '/rest/v1/rpc/consulter_espaces_publics');
+    expect(espaces.single.idGestionnaire, isNull);
+    await expectLater(
+      depot.changerStatut(1, StatutEspace.inactif),
+      throwsA(isA<AuthException>()),
+    );
+    expect(requetes.length, 1);
   });
 
   test('Un refus serveur remonte au lieu de simuler une réussite', () async {

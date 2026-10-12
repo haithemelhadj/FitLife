@@ -9,6 +9,22 @@ class EspaceSportifRepository {
 
   EspaceSportifRepository(this.client);
 
+  bool get lecturePublique => false;
+
+  bool get estConnecte => client.auth.currentSession != null;
+
+  Stream<AuthState> get changementsConnexion => client.auth.onAuthStateChange;
+
+  Future<EspaceSportif> changerStatut(int id, StatutEspace statut) async =>
+      EspaceSportif.fromJson(
+        await client
+            .from('espace_sportif')
+            .update({'statut': statut.code})
+            .eq('id_espace', id)
+            .select()
+            .single(),
+      );
+
   Future<ContexteEspace> getContexte() async {
     final resultat = await client.rpc('contexte_espaces');
     return ContexteEspace.fromJson(Map<String, dynamic>.from(resultat as Map));
