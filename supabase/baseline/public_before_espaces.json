@@ -1,0 +1,1895 @@
+{
+  "tables": [
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": true,
+      "name": "evenements"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": true,
+      "name": "categories"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": true,
+      "name": "paiements_evenement"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": true,
+      "name": "inscriptions"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": true,
+      "name": "programme"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": true,
+      "name": "programme_exercice"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": true,
+      "name": "seance"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": true,
+      "name": "reservation_seance"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": true,
+      "name": "profiles"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": true,
+      "name": "exercice"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": false,
+      "name": "consultation_nutrition"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": false,
+      "name": "dossier_nutritionnel"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": false,
+      "name": "programme_nutritionnel"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "anon=arwdDxtm/postgres",
+        "authenticated=arwdDxtm/postgres",
+        "service_role=arwdDxtm/postgres"
+      ],
+      "rls": false,
+      "name": "repas"
+    }
+  ],
+  "columns": [
+    {
+      "type": "int8",
+      "table": "programme",
+      "column": "id_programme",
+      "default": null,
+      "identity": "ALWAYS",
+      "nullable": "NO"
+    },
+    {
+      "type": "int8",
+      "table": "reservation_seance",
+      "column": "id_seance",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "reservation_seance",
+      "column": "id_athlete",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "timestamptz",
+      "table": "reservation_seance",
+      "column": "date_reservation",
+      "default": "now()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "statut_reservation",
+      "table": "reservation_seance",
+      "column": "statut",
+      "default": "'CONFIRMEE'::statut_reservation",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "profiles",
+      "column": "id",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "role_utilisateur",
+      "table": "profiles",
+      "column": "role",
+      "default": "'ATHLETE'::role_utilisateur",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "date",
+      "table": "profiles",
+      "column": "date_naissance",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "timestamptz",
+      "table": "profiles",
+      "column": "date_creation",
+      "default": "now()",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "bool",
+      "table": "profiles",
+      "column": "actif",
+      "default": "true",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "int8",
+      "table": "exercice",
+      "column": "id_exercice",
+      "default": null,
+      "identity": "ALWAYS",
+      "nullable": "NO"
+    },
+    {
+      "type": "niveau",
+      "table": "exercice",
+      "column": "niveau",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "uuid",
+      "table": "consultation_nutrition",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "consultation_nutrition",
+      "column": "id_athlete",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "consultation_nutrition",
+      "column": "id_nutritionniste",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "date",
+      "table": "consultation_nutrition",
+      "column": "date_consultation",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "timestamptz",
+      "table": "consultation_nutrition",
+      "column": "created_at",
+      "default": "now()",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "uuid",
+      "table": "dossier_nutritionnel",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "dossier_nutritionnel",
+      "column": "id_athlete",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "dossier_nutritionnel",
+      "column": "poids_initial",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "dossier_nutritionnel",
+      "column": "poids_actuel",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "dossier_nutritionnel",
+      "column": "poids_cible",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "dossier_nutritionnel",
+      "column": "taille_cm",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "timestamptz",
+      "table": "dossier_nutritionnel",
+      "column": "date_creation",
+      "default": "now()",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "timestamptz",
+      "table": "dossier_nutritionnel",
+      "column": "date_mise_a_jour",
+      "default": "now()",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "uuid",
+      "table": "programme_nutritionnel",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "programme_nutritionnel",
+      "column": "id_dossier",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "programme_nutritionnel",
+      "column": "id_nutritionniste",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "int4",
+      "table": "programme_nutritionnel",
+      "column": "calories_cible",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "programme_nutritionnel",
+      "column": "proteines_cible_g",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "programme_nutritionnel",
+      "column": "glucides_cible_g",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "programme_nutritionnel",
+      "column": "lipides_cible_g",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "programme_nutritionnel",
+      "column": "budget_montant",
+      "default": "0",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "date",
+      "table": "programme_nutritionnel",
+      "column": "date_debut",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "date",
+      "table": "programme_nutritionnel",
+      "column": "date_fin",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "timestamptz",
+      "table": "programme_nutritionnel",
+      "column": "created_at",
+      "default": "now()",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "uuid",
+      "table": "repas",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "repas",
+      "column": "id_programme",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int4",
+      "table": "repas",
+      "column": "calories",
+      "default": "0",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "repas",
+      "column": "proteines_g",
+      "default": "0",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "numeric",
+      "table": "repas",
+      "column": "glucides_g",
+      "default": "0",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "numeric",
+      "table": "repas",
+      "column": "lipides_g",
+      "default": "0",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "jsonb",
+      "table": "repas",
+      "column": "aliments_json",
+      "default": "'[]'::jsonb",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "int4",
+      "table": "repas",
+      "column": "ordre",
+      "default": "1",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "timestamptz",
+      "table": "repas",
+      "column": "created_at",
+      "default": "now()",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "date",
+      "table": "evenements",
+      "column": "date_debut",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "date",
+      "table": "evenements",
+      "column": "date_fin",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int4",
+      "table": "evenements",
+      "column": "capacite",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "evenements",
+      "column": "prix",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "categories",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int4",
+      "table": "categories",
+      "column": "age_min",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int4",
+      "table": "categories",
+      "column": "age_max",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "categories",
+      "column": "id_evenement",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "paiements_evenement",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "paiements_evenement",
+      "column": "id_inscription",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "numeric",
+      "table": "paiements_evenement",
+      "column": "montant",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "timestamptz",
+      "table": "paiements_evenement",
+      "column": "date_paiement",
+      "default": "now()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "inscriptions",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "inscriptions",
+      "column": "id_evenement",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "inscriptions",
+      "column": "id_categorie",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "timestamptz",
+      "table": "inscriptions",
+      "column": "date_inscription",
+      "default": "now()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int4",
+      "table": "inscriptions",
+      "column": "age_athlete",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "uuid",
+      "table": "evenements",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "objectif_programme",
+      "table": "programme",
+      "column": "objectif",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "niveau",
+      "table": "programme",
+      "column": "niveau",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int4",
+      "table": "programme",
+      "column": "duree_semaines",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "date",
+      "table": "programme",
+      "column": "date_debut",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "date",
+      "table": "programme",
+      "column": "date_fin",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "uuid",
+      "table": "programme",
+      "column": "id_coach",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int8",
+      "table": "programme_exercice",
+      "column": "id_programme",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int8",
+      "table": "programme_exercice",
+      "column": "id_exercice",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int4",
+      "table": "programme_exercice",
+      "column": "ordre",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int4",
+      "table": "programme_exercice",
+      "column": "series",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "int4",
+      "table": "programme_exercice",
+      "column": "repetitions",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "int4",
+      "table": "programme_exercice",
+      "column": "temps_repos",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "float8",
+      "table": "programme_exercice",
+      "column": "charge",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "int8",
+      "table": "seance",
+      "column": "id_seance",
+      "default": null,
+      "identity": "ALWAYS",
+      "nullable": "NO"
+    },
+    {
+      "type": "date",
+      "table": "seance",
+      "column": "date",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "time",
+      "table": "seance",
+      "column": "heure_debut",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "time",
+      "table": "seance",
+      "column": "heure_fin",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "type_seance",
+      "table": "seance",
+      "column": "type",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int4",
+      "table": "seance",
+      "column": "capacite",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "float8",
+      "table": "seance",
+      "column": "prix",
+      "default": "0",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "statut_seance",
+      "table": "seance",
+      "column": "statut",
+      "default": "'PLANIFIEE'::statut_seance",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "uuid",
+      "table": "seance",
+      "column": "id_coach",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "int8",
+      "table": "seance",
+      "column": "id_programme",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "int8",
+      "table": "seance",
+      "column": "id_espace_sportif",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "int8",
+      "table": "reservation_seance",
+      "column": "id_reservation",
+      "default": null,
+      "identity": "ALWAYS",
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "evenements",
+      "column": "nom",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "evenements",
+      "column": "description",
+      "default": "''::text",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "evenements",
+      "column": "type",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "varchar",
+      "table": "programme_nutritionnel",
+      "column": "budget_devise",
+      "default": "'EUR'::character varying",
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "varchar",
+      "table": "repas",
+      "column": "type",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "evenements",
+      "column": "heure_debut",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "evenements",
+      "column": "lieu",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "varchar",
+      "table": "dossier_nutritionnel",
+      "column": "objectif",
+      "default": "'PERTE_POIDS'::character varying",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "exercice",
+      "column": "external_id",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "evenements",
+      "column": "statut",
+      "default": "'BROUILLON'::text",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "seance",
+      "column": "titre",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "categories",
+      "column": "nom",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "seance",
+      "column": "description",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "exercice",
+      "column": "nom",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "categories",
+      "column": "niveau",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "exercice",
+      "column": "description",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "exercice",
+      "column": "muscle",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "varchar",
+      "table": "repas",
+      "column": "heure_recommandee",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "exercice",
+      "column": "equipement",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "exercice",
+      "column": "image_url",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "paiements_evenement",
+      "column": "methode",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "paiements_evenement",
+      "column": "statut",
+      "default": "'EN_ATTENTE'::text",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "paiements_evenement",
+      "column": "reference",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "exercice",
+      "column": "gif_url",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "exercice",
+      "column": "instructions",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "inscriptions",
+      "column": "id_athlete",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "exercice",
+      "column": "video_youtube_id",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "varchar",
+      "table": "programme_nutritionnel",
+      "column": "statut",
+      "default": "'ACTIF'::character varying",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "inscriptions",
+      "column": "statut",
+      "default": "'EN_ATTENTE'::text",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "varchar",
+      "table": "programme_nutritionnel",
+      "column": "titre",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "inscriptions",
+      "column": "niveau_athlete",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "programme_nutritionnel",
+      "column": "description",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "programme",
+      "column": "nom",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "programme",
+      "column": "description",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "dossier_nutritionnel",
+      "column": "remarques",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "varchar",
+      "table": "consultation_nutrition",
+      "column": "heure_consultation",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "consultation_nutrition",
+      "column": "motif",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "consultation_nutrition",
+      "column": "compte_rendu",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "profiles",
+      "column": "nom",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "profiles",
+      "column": "prenom",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "varchar",
+      "table": "consultation_nutrition",
+      "column": "statut",
+      "default": "'DEMANDEE'::character varying",
+      "identity": null,
+      "nullable": "NO"
+    },
+    {
+      "type": "text",
+      "table": "profiles",
+      "column": "telephone",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "text",
+      "table": "profiles",
+      "column": "photo",
+      "default": null,
+      "identity": null,
+      "nullable": "YES"
+    },
+    {
+      "type": "varchar",
+      "table": "repas",
+      "column": "nom",
+      "default": null,
+      "identity": null,
+      "nullable": "NO"
+    }
+  ],
+  "indexes": [
+    {
+      "indexdef": "CREATE UNIQUE INDEX evenements_pkey ON public.evenements USING btree (id)",
+      "indexname": "evenements_pkey",
+      "tablename": "evenements",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX categories_pkey ON public.categories USING btree (id)",
+      "indexname": "categories_pkey",
+      "tablename": "categories",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX paiements_evenement_pkey ON public.paiements_evenement USING btree (id)",
+      "indexname": "paiements_evenement_pkey",
+      "tablename": "paiements_evenement",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX paiements_evenement_id_inscription_key ON public.paiements_evenement USING btree (id_inscription)",
+      "indexname": "paiements_evenement_id_inscription_key",
+      "tablename": "paiements_evenement",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX inscriptions_pkey ON public.inscriptions USING btree (id)",
+      "indexname": "inscriptions_pkey",
+      "tablename": "inscriptions",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX programme_pkey ON public.programme USING btree (id_programme)",
+      "indexname": "programme_pkey",
+      "tablename": "programme",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX programme_exercice_pkey ON public.programme_exercice USING btree (id_programme, id_exercice)",
+      "indexname": "programme_exercice_pkey",
+      "tablename": "programme_exercice",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX seance_pkey ON public.seance USING btree (id_seance)",
+      "indexname": "seance_pkey",
+      "tablename": "seance",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX seance_id_coach_tsrange_excl ON public.seance USING gist (id_coach, tsrange((date + heure_debut), (date + heure_fin))) WHERE (statut <> 'ANNULEE'::statut_seance)",
+      "indexname": "seance_id_coach_tsrange_excl",
+      "tablename": "seance",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX reservation_seance_pkey ON public.reservation_seance USING btree (id_reservation)",
+      "indexname": "reservation_seance_pkey",
+      "tablename": "reservation_seance",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX reservation_active_unique ON public.reservation_seance USING btree (id_seance, id_athlete) WHERE (statut = 'CONFIRMEE'::statut_reservation)",
+      "indexname": "reservation_active_unique",
+      "tablename": "reservation_seance",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX idx_reservation_seance ON public.reservation_seance USING btree (id_seance)",
+      "indexname": "idx_reservation_seance",
+      "tablename": "reservation_seance",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id)",
+      "indexname": "profiles_pkey",
+      "tablename": "profiles",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX exercice_pkey ON public.exercice USING btree (id_exercice)",
+      "indexname": "exercice_pkey",
+      "tablename": "exercice",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX exercice_external_id_key ON public.exercice USING btree (external_id)",
+      "indexname": "exercice_external_id_key",
+      "tablename": "exercice",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX consultation_nutrition_pkey ON public.consultation_nutrition USING btree (id)",
+      "indexname": "consultation_nutrition_pkey",
+      "tablename": "consultation_nutrition",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX idx_consult_athlete ON public.consultation_nutrition USING btree (id_athlete)",
+      "indexname": "idx_consult_athlete",
+      "tablename": "consultation_nutrition",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX idx_consult_nutri ON public.consultation_nutrition USING btree (id_nutritionniste)",
+      "indexname": "idx_consult_nutri",
+      "tablename": "consultation_nutrition",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX dossier_nutritionnel_pkey ON public.dossier_nutritionnel USING btree (id)",
+      "indexname": "dossier_nutritionnel_pkey",
+      "tablename": "dossier_nutritionnel",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_athlete_dossier ON public.dossier_nutritionnel USING btree (id_athlete)",
+      "indexname": "uq_athlete_dossier",
+      "tablename": "dossier_nutritionnel",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX idx_dossier_athlete ON public.dossier_nutritionnel USING btree (id_athlete)",
+      "indexname": "idx_dossier_athlete",
+      "tablename": "dossier_nutritionnel",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX programme_nutritionnel_pkey ON public.programme_nutritionnel USING btree (id)",
+      "indexname": "programme_nutritionnel_pkey",
+      "tablename": "programme_nutritionnel",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX idx_programme_dossier ON public.programme_nutritionnel USING btree (id_dossier)",
+      "indexname": "idx_programme_dossier",
+      "tablename": "programme_nutritionnel",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX repas_pkey ON public.repas USING btree (id)",
+      "indexname": "repas_pkey",
+      "tablename": "repas",
+      "schemaname": "public",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX idx_repas_programme ON public.repas USING btree (id_programme)",
+      "indexname": "idx_repas_programme",
+      "tablename": "repas",
+      "schemaname": "public",
+      "tablespace": null
+    }
+  ],
+  "policies": [
+    {
+      "cmd": "ALL",
+      "qual": "true",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "evenements",
+      "permissive": "PERMISSIVE",
+      "policyname": "dev_all",
+      "schemaname": "public",
+      "with_check": "true"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "true",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "categories",
+      "permissive": "PERMISSIVE",
+      "policyname": "dev_all",
+      "schemaname": "public",
+      "with_check": "true"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "true",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "paiements_evenement",
+      "permissive": "PERMISSIVE",
+      "policyname": "dev_all",
+      "schemaname": "public",
+      "with_check": "true"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "true",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "inscriptions",
+      "permissive": "PERMISSIVE",
+      "policyname": "dev_all",
+      "schemaname": "public",
+      "with_check": "true"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "(id_coach = auth.uid())",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "programme",
+      "permissive": "PERMISSIVE",
+      "policyname": "programme coach ecrit",
+      "schemaname": "public",
+      "with_check": "(id_coach = auth.uid())"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "true",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "programme",
+      "permissive": "PERMISSIVE",
+      "policyname": "programme lecture",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "ALL",
+      "qual": "(EXISTS ( SELECT 1\n   FROM programme p\n  WHERE ((p.id_programme = programme_exercice.id_programme) AND (p.id_coach = auth.uid()))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "programme_exercice",
+      "permissive": "PERMISSIVE",
+      "policyname": "pe coach ecrit",
+      "schemaname": "public",
+      "with_check": "(EXISTS ( SELECT 1\n   FROM programme p\n  WHERE ((p.id_programme = programme_exercice.id_programme) AND (p.id_coach = auth.uid()))))"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "true",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "programme_exercice",
+      "permissive": "PERMISSIVE",
+      "policyname": "pe lecture",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "ALL",
+      "qual": "(id_coach = auth.uid())",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "seance",
+      "permissive": "PERMISSIVE",
+      "policyname": "seance coach ecrit",
+      "schemaname": "public",
+      "with_check": "(id_coach = auth.uid())"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "true",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "seance",
+      "permissive": "PERMISSIVE",
+      "policyname": "seance lecture",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "UPDATE",
+      "qual": "(id_athlete = auth.uid())",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "reservation_seance",
+      "permissive": "PERMISSIVE",
+      "policyname": "athlete annule sa reservation",
+      "schemaname": "public",
+      "with_check": "((id_athlete = auth.uid()) AND (statut = 'ANNULEE'::statut_reservation))"
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "reservation_seance",
+      "permissive": "PERMISSIVE",
+      "policyname": "athlete reserve pour lui",
+      "schemaname": "public",
+      "with_check": "((id_athlete = auth.uid()) AND (statut = 'CONFIRMEE'::statut_reservation))"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "((id_athlete = auth.uid()) OR (EXISTS ( SELECT 1\n   FROM seance s\n  WHERE ((s.id_seance = reservation_seance.id_seance) AND (s.id_coach = auth.uid())))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "reservation_seance",
+      "permissive": "PERMISSIVE",
+      "policyname": "athlete voit ses reservations",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "profiles",
+      "permissive": "PERMISSIVE",
+      "policyname": "profiles creation propre profil",
+      "schemaname": "public",
+      "with_check": "(id = auth.uid())"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "true",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "profiles",
+      "permissive": "PERMISSIVE",
+      "policyname": "profiles lecture",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "UPDATE",
+      "qual": "(id = auth.uid())",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "profiles",
+      "permissive": "PERMISSIVE",
+      "policyname": "profiles modif propre profil",
+      "schemaname": "public",
+      "with_check": "(id = auth.uid())"
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "exercice",
+      "permissive": "PERMISSIVE",
+      "policyname": "exercice ajout",
+      "schemaname": "public",
+      "with_check": "true"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "true",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "exercice",
+      "permissive": "PERMISSIVE",
+      "policyname": "exercice lecture",
+      "schemaname": "public",
+      "with_check": null
+    }
+  ],
+  "triggers": [
+    "CREATE TRIGGER trg_capacite_seance BEFORE INSERT ON public.reservation_seance FOR EACH ROW EXECUTE FUNCTION check_capacite_seance()",
+    "CREATE TRIGGER trg_liberer_place AFTER UPDATE OF statut ON public.reservation_seance FOR EACH ROW EXECUTE FUNCTION liberer_place_seance()",
+    "CREATE TRIGGER trg_bloquer_modif BEFORE UPDATE ON public.reservation_seance FOR EACH ROW EXECUTE FUNCTION bloquer_modif_reservation()"
+  ],
+  "functions": [
+    {
+      "acl": [
+        "=X/postgres",
+        "postgres=X/postgres",
+        "anon=X/postgres",
+        "authenticated=X/postgres",
+        "service_role=X/postgres"
+      ],
+      "name": "handle_new_user",
+      "definition": "CREATE OR REPLACE FUNCTION public.handle_new_user()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\nbegin\r\n  insert into public.profiles (id, nom, prenom, role)\r\n  values (new.id, new.raw_user_meta_data->>'nom', new.raw_user_meta_data->>'prenom', 'ATHLETE');\r\n  return new;\r\nend; $function$\n"
+    },
+    {
+      "acl": [
+        "=X/postgres",
+        "postgres=X/postgres",
+        "anon=X/postgres",
+        "authenticated=X/postgres",
+        "service_role=X/postgres"
+      ],
+      "name": "check_capacite_seance",
+      "definition": "CREATE OR REPLACE FUNCTION public.check_capacite_seance()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\ndeclare cap int; st statut_seance; nb int;\r\nbegin\r\n  select capacite, statut into cap, st\r\n  from seance where id_seance = new.id_seance for update;\r\n\r\n  if st is null or st <> 'PLANIFIEE' then\r\n    raise exception 'Séance non disponible';\r\n  end if;\r\n\r\n  select count(*) into nb from reservation_seance\r\n  where id_seance = new.id_seance and statut = 'CONFIRMEE';\r\n\r\n  if cap is not null and nb >= cap then\r\n    raise exception 'Séance complète';\r\n  end if;\r\n\r\n  if cap is not null and nb + 1 >= cap then\r\n    update seance set statut = 'COMPLETE' where id_seance = new.id_seance;\r\n  end if;\r\n\r\n  return new;\r\nend $function$\n"
+    },
+    {
+      "acl": [
+        "=X/postgres",
+        "postgres=X/postgres",
+        "anon=X/postgres",
+        "authenticated=X/postgres",
+        "service_role=X/postgres"
+      ],
+      "name": "liberer_place_seance",
+      "definition": "CREATE OR REPLACE FUNCTION public.liberer_place_seance()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\nbegin\r\n  if old.statut = 'CONFIRMEE' and new.statut = 'ANNULEE' then\r\n    update seance set statut = 'PLANIFIEE'\r\n    where id_seance = new.id_seance and statut = 'COMPLETE';\r\n  end if;\r\n  return new;\r\nend $function$\n"
+    },
+    {
+      "acl": [
+        "=X/postgres",
+        "postgres=X/postgres",
+        "anon=X/postgres",
+        "authenticated=X/postgres",
+        "service_role=X/postgres"
+      ],
+      "name": "bloquer_modif_reservation",
+      "definition": "CREATE OR REPLACE FUNCTION public.bloquer_modif_reservation()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nbegin\r\n  if new.id_seance <> old.id_seance\r\n     or new.id_athlete <> old.id_athlete\r\n     or new.date_reservation <> old.date_reservation then\r\n    raise exception 'Seule l''annulation est autorisée';\r\n  end if;\r\n  return new;\r\nend $function$\n"
+    }
+  ],
+  "captured_at": "2026-10-12T12:44:17.024413+00:00",
+  "constraints": [
+    {
+      "name": "programme_exercice_pkey",
+      "table": "programme_exercice",
+      "definition": "PRIMARY KEY (id_programme, id_exercice)"
+    },
+    {
+      "name": "programme_exercice_id_programme_fkey",
+      "table": "programme_exercice",
+      "definition": "FOREIGN KEY (id_programme) REFERENCES programme(id_programme) ON DELETE CASCADE"
+    },
+    {
+      "name": "programme_exercice_id_exercice_fkey",
+      "table": "programme_exercice",
+      "definition": "FOREIGN KEY (id_exercice) REFERENCES exercice(id_exercice) ON DELETE RESTRICT"
+    },
+    {
+      "name": "reservation_seance_id_seance_fkey",
+      "table": "reservation_seance",
+      "definition": "FOREIGN KEY (id_seance) REFERENCES seance(id_seance) ON DELETE CASCADE"
+    },
+    {
+      "name": "seance_capacite_check",
+      "table": "seance",
+      "definition": "CHECK ((capacite > 0))"
+    },
+    {
+      "name": "seance_check",
+      "table": "seance",
+      "definition": "CHECK ((heure_fin > heure_debut))"
+    },
+    {
+      "name": "seance_pkey",
+      "table": "seance",
+      "definition": "PRIMARY KEY (id_seance)"
+    },
+    {
+      "name": "seance_id_coach_tsrange_excl",
+      "table": "seance",
+      "definition": "EXCLUDE USING gist (id_coach WITH =, tsrange((date + heure_debut), (date + heure_fin)) WITH &&) WHERE ((statut <> 'ANNULEE'::statut_seance))"
+    },
+    {
+      "name": "seance_id_coach_fkey",
+      "table": "seance",
+      "definition": "FOREIGN KEY (id_coach) REFERENCES profiles(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "seance_id_programme_fkey",
+      "table": "seance",
+      "definition": "FOREIGN KEY (id_programme) REFERENCES programme(id_programme) ON DELETE SET NULL"
+    },
+    {
+      "name": "reservation_seance_id_athlete_fkey",
+      "table": "reservation_seance",
+      "definition": "FOREIGN KEY (id_athlete) REFERENCES profiles(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "uq_athlete_dossier",
+      "table": "dossier_nutritionnel",
+      "definition": "UNIQUE (id_athlete)"
+    },
+    {
+      "name": "consultation_nutrition_pkey",
+      "table": "consultation_nutrition",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "programme_nutritionnel_pkey",
+      "table": "programme_nutritionnel",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "programme_nutritionnel_id_dossier_fkey",
+      "table": "programme_nutritionnel",
+      "definition": "FOREIGN KEY (id_dossier) REFERENCES dossier_nutritionnel(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "repas_pkey",
+      "table": "repas",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "repas_id_programme_fkey",
+      "table": "repas",
+      "definition": "FOREIGN KEY (id_programme) REFERENCES programme_nutritionnel(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "evenements_type_check",
+      "table": "evenements",
+      "definition": "CHECK ((type = ANY (ARRAY['MARATHON'::text, 'COMPETITION'::text, 'MATCH'::text, 'TOURNOI'::text, 'GALA'::text, 'CHALLENGE'::text])))"
+    },
+    {
+      "name": "evenements_capacite_check",
+      "table": "evenements",
+      "definition": "CHECK ((capacite > 0))"
+    },
+    {
+      "name": "evenements_prix_check",
+      "table": "evenements",
+      "definition": "CHECK ((prix >= (0)::numeric))"
+    },
+    {
+      "name": "evenements_statut_check",
+      "table": "evenements",
+      "definition": "CHECK ((statut = ANY (ARRAY['BROUILLON'::text, 'OUVERT'::text, 'COMPLET'::text, 'TERMINE'::text, 'ANNULE'::text])))"
+    },
+    {
+      "name": "evenements_check",
+      "table": "evenements",
+      "definition": "CHECK ((date_fin >= date_debut))"
+    },
+    {
+      "name": "evenements_pkey",
+      "table": "evenements",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "categories_age_min_check",
+      "table": "categories",
+      "definition": "CHECK ((age_min >= 0))"
+    },
+    {
+      "name": "categories_niveau_check",
+      "table": "categories",
+      "definition": "CHECK ((niveau = ANY (ARRAY['DEBUTANT'::text, 'INTERMEDIAIRE'::text, 'AVANCE'::text, 'PROFESSIONNEL'::text])))"
+    },
+    {
+      "name": "categories_check",
+      "table": "categories",
+      "definition": "CHECK ((age_max >= age_min))"
+    },
+    {
+      "name": "categories_pkey",
+      "table": "categories",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "categories_id_evenement_fkey",
+      "table": "categories",
+      "definition": "FOREIGN KEY (id_evenement) REFERENCES evenements(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "reservation_seance_pkey",
+      "table": "reservation_seance",
+      "definition": "PRIMARY KEY (id_reservation)"
+    },
+    {
+      "name": "dossier_nutritionnel_pkey",
+      "table": "dossier_nutritionnel",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "inscriptions_statut_check",
+      "table": "inscriptions",
+      "definition": "CHECK ((statut = ANY (ARRAY['EN_ATTENTE'::text, 'CONFIRMEE'::text, 'ANNULEE'::text, 'REFUSEE'::text])))"
+    },
+    {
+      "name": "inscriptions_pkey",
+      "table": "inscriptions",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "inscriptions_id_evenement_fkey",
+      "table": "inscriptions",
+      "definition": "FOREIGN KEY (id_evenement) REFERENCES evenements(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "inscriptions_id_categorie_fkey",
+      "table": "inscriptions",
+      "definition": "FOREIGN KEY (id_categorie) REFERENCES categories(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "paiements_evenement_montant_check",
+      "table": "paiements_evenement",
+      "definition": "CHECK ((montant >= (0)::numeric))"
+    },
+    {
+      "name": "paiements_evenement_methode_check",
+      "table": "paiements_evenement",
+      "definition": "CHECK ((methode = ANY (ARRAY['CARTE'::text, 'VIREMENT'::text, 'ESPECES'::text])))"
+    },
+    {
+      "name": "paiements_evenement_statut_check",
+      "table": "paiements_evenement",
+      "definition": "CHECK ((statut = ANY (ARRAY['EN_ATTENTE'::text, 'PAYE'::text, 'ECHOUE'::text, 'REMBOURSE'::text])))"
+    },
+    {
+      "name": "paiements_evenement_pkey",
+      "table": "paiements_evenement",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "paiements_evenement_id_inscription_key",
+      "table": "paiements_evenement",
+      "definition": "UNIQUE (id_inscription)"
+    },
+    {
+      "name": "paiements_evenement_id_inscription_fkey",
+      "table": "paiements_evenement",
+      "definition": "FOREIGN KEY (id_inscription) REFERENCES inscriptions(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "profiles_pkey",
+      "table": "profiles",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "profiles_id_fkey",
+      "table": "profiles",
+      "definition": "FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "exercice_pkey",
+      "table": "exercice",
+      "definition": "PRIMARY KEY (id_exercice)"
+    },
+    {
+      "name": "exercice_external_id_key",
+      "table": "exercice",
+      "definition": "UNIQUE (external_id)"
+    },
+    {
+      "name": "programme_duree_semaines_check",
+      "table": "programme",
+      "definition": "CHECK ((duree_semaines > 0))"
+    },
+    {
+      "name": "programme_check",
+      "table": "programme",
+      "definition": "CHECK (((date_fin IS NULL) OR (date_fin >= date_debut)))"
+    },
+    {
+      "name": "programme_pkey",
+      "table": "programme",
+      "definition": "PRIMARY KEY (id_programme)"
+    },
+    {
+      "name": "programme_id_coach_fkey",
+      "table": "programme",
+      "definition": "FOREIGN KEY (id_coach) REFERENCES profiles(id) ON DELETE CASCADE"
+    }
+  ]
+}

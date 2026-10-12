@@ -105,6 +105,11 @@ create index offre_espace_statut_idx on public.offre(id_espace,statut);
 create index abonnement_athlete_idx on public.abonnement(id_athlete,id_abonnement);
 create index abonnement_offre_statut_idx on public.abonnement(id_offre,statut);
 
+/* Ce lien conserve les séances sans espace et protège les espaces référencés. */
+alter table public.seance add constraint seance_espace_sportif_fkey
+  foreign key (id_espace_sportif) references public.espace_sportif(id_espace) on delete restrict;
+create index seance_espace_date_idx on public.seance(id_espace_sportif,date);
+
 create function espace_prive.aujourdhui() returns date
 language sql stable set search_path = '' as $$
   select (current_timestamp at time zone 'Africa/Tunis')::date

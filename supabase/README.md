@@ -1,18 +1,18 @@
 # Sports spaces database foundation
 
-The migration creates five feature tables, seven enum types, ownership policies, protected subscription operations and exact monetary read views. The file was created with Supabase CLI 2.120.0. It has not been applied to the shared FitLife project.
+The migrations create five feature tables, seven enum types, ownership policies, protected subscription operations and exact monetary read views. They were generated with Supabase CLI 2.120.0 and applied to the shared FitLife project on October 12, 2026. Local filenames match the authoritative hosted migration versions. See [verification](VERIFICATION.md).
 
 This repository previously had no migration baseline. The migration intentionally depends on the existing shared `public.profiles` table and Supabase Auth. It is not a complete database bootstrap. Do not reset the shared database or run a blind database push to establish a baseline.
 
-## Deployment prerequisites
+## Migration workflow and shared dependencies
 
-1. Establish the existing database baseline with the team in a development environment. Preserve the existing auth, training, event and nutrition schema and migration history.
-2. Have the shared authentication owner protect `profiles.role` and `profiles.actif` on both INSERT and UPDATE. The migration refuses deployment while `anon` or `authenticated` retains write privileges on those columns. Defaults must create ATHLETE profiles with actif true. Trusted administrative operations remain responsible for assigning other roles and disabling accounts.
-3. Verify that profile IDs cannot be changed or forged and that the existing profile INSERT policy requires `id = auth.uid()`. Restrict table-level privileges before granting only the permitted profile columns. Merely revoking a column privilege cannot narrow a table-level grant. The migration's privilege precheck is not a substitute for the shared authentication review.
+1. The pre-change metadata snapshot is `baseline/public_before_espaces.json`. It contains no application records and is not a replayable bootstrap. These are additive migrations against the existing schema. Preserve shared migration history; a fresh database needs the existing modules and Auth first.
+2. The first migration protects `profiles.role` and `profiles.actif` on INSERT and UPDATE. Defaults create ATHLETE profiles with actif true. Trusted administrative operations remain responsible for assigning other roles and disabling accounts.
+3. Profile IDs cannot be changed or forged. Ordinary name, phone, photo and birth-date edits remain allowed under existing ownership policies. Existing profile read visibility and the Auth signup trigger are preserved.
 4. Keep `espace_prive` outside the exposed Data API schemas. Its explicitly authorized internal functions prevent policy recursion and perform protected subscription writes. Public RPC wrappers are security invokers. All entry points check the current user's protected role and active status; secret/service keys never belong in Flutter.
-5. Apply the feature migration in the development environment, run role tests through Supabase/PostgREST, inspect the Supabase security advisors, and review the resulting schema before shared rollout.
+5. For subsequent changes, generate a new migration with the CLI, test it locally, apply it, and reconcile its filename with the hosted migration history. Do not modify already applied SQL.
 
-The previously inspected live profile permissions did not satisfy prerequisite 2. They have not been changed by this work. No real accounts or records were created by the tests.
+The previously unsafe profile write permissions are now protected. Hosted tests created temporary accounts and feature records inside transactions that were rolled back. No test records remain.
 
 ## API contract
 
@@ -38,12 +38,12 @@ npm ci --prefix supabase/tests
 npm test --prefix supabase/tests
 ```
 
-The pinned PGlite dependency runs PostgreSQL with btree_gist in memory. The test fixture mocks Supabase's role/session helpers and creates a minimal shared profile schema. It first verifies refusal of unsafe role privileges, then simulates the protected baseline and tests the migration under distinct database roles.
+The pinned PGlite dependency runs PostgreSQL with btree_gist in memory. The fixture mocks Supabase's role/session helpers and creates minimal shared profile and session tables. It first verifies refusal of unsafe role privileges, then applies the actual protection, foundation and optimization migrations under distinct database roles. If process spawning is restricted, use `node --test --test-isolation=none supabase/tests/espaces.test.mjs`.
 
-Tests cover cross-owner access, insert responses under RLS, inactive/anonymous users, immutable ownership, monetary snapshots, duplicates, status transitions, date expiration, opening overlaps and history protection. This validates SQL behavior, not the hosted Auth/PostgREST gateway. PGlite serializes queries; simultaneous connections and lock behavior must additionally be exercised against the development PostgreSQL instance before deployment.
+Tests cover cross-owner access, insert responses under RLS, inactive/anonymous users, immutable ownership, monetary snapshots, duplicates, status transitions, date expiration, opening overlaps and history protection. `tests/hosted_smoke.sql` validates hosted database roles and real Auth helpers inside a rolled-back transaction. Anonymous API denial and private-schema exclusion were verified through PostgREST. Authenticated gateway flows and simultaneous-connection lock behavior remain integration checks; PGlite serializes queries.
 
 ## Deferred integration
 
-No training tables are altered here. The nullable foreign key from `seance.id_espace_sportif`, persistent session equipment requirements, and atomic space-occupancy enforcement belong to the agreed training integration. The Flutter checker is advisory until that integration exists.
+The existing nullable `seance.id_espace_sportif` now has a foreign key and a covering space/date index. Persistent session equipment requirements and atomic space-occupancy enforcement still belong to the agreed training integration. The Flutter checker is advisory until that integration exists.
 
 Subscriber names are not exposed by a new function in this step. Profile visibility requires the shared privacy review before adding that UI. No migration repairs unrelated existing profile-read permissions.

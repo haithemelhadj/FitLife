@@ -14,6 +14,10 @@ create table public.profiles (
   id uuid primary key,
   nom text,
   prenom text,
+  telephone text,
+  photo text,
+  date_naissance date,
+  date_creation timestamptz default now(),
   role public.role_utilisateur not null default 'ATHLETE',
   actif boolean default true
 );
@@ -22,6 +26,13 @@ create policy lecture on public.profiles for select to authenticated using (true
 create policy creation on public.profiles for insert to authenticated with check (id=auth.uid());
 create policy modification on public.profiles for update to authenticated using (id=auth.uid()) with check (id=auth.uid());
 grant select,insert,update on public.profiles to authenticated;
+grant all on public.profiles to anon;
+grant update(role),insert(actif) on public.profiles to authenticated;
+create table public.seance (
+  id_seance bigint generated always as identity primary key,
+  date date not null,
+  id_espace_sportif bigint
+);
 insert into public.profiles (id,nom,role,actif) values
 ('00000000-0000-0000-0000-000000000001','Gestionnaire A','GESTIONNAIRE_ESPACE',true),
 ('00000000-0000-0000-0000-000000000002','Gestionnaire B','GESTIONNAIRE_ESPACE',true),

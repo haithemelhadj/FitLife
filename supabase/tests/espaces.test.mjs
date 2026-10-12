@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { test } from 'node:test';
 import { PGlite } from '@electric-sql/pglite';
 import { btree_gist } from '@electric-sql/pglite/contrib/btree_gist';
@@ -10,7 +10,10 @@ test('Contrat SQL des espaces sportifs dans PostgreSQL isolé', async (t) => {
   const db = new PGlite({ extensions: { btree_gist } });
   t.after(() => db.close());
   await db.exec(await readFile(new URL('./fixtures.sql', import.meta.url), 'utf8'));
-  const migration = await readFile(new URL('../migrations/20261011224412_espaces_sportifs.sql', import.meta.url), 'utf8');
+  const fichiers = await readdir(new URL('../migrations/', import.meta.url));
+  const charger = (suffixe) => readFile(new URL('../migrations/' + fichiers.find((nom) => nom.endsWith(suffixe)), import.meta.url), 'utf8');
+  const migration = await charger('_fondation_espaces.sql');
+  const protection = await charger('_securiser_profils_espaces.sql');
   const actor = (id, fn, anonymous = false) => db.transaction(async (tx) => {
     await tx.exec('set local role authenticated');
     await tx.query("select set_config('request.jwt.claims',$1,true)",
@@ -25,10 +28,20 @@ test('Contrat SQL des espaces sportifs dans PostgreSQL isolé', async (t) => {
     assert.equal((await one(db, "select to_regclass('public.espace_sportif') as table_name")).table_name, null);
   });
 
-  // La protection partagée est simulée uniquement dans cette base de test.
-  await db.exec(`revoke insert,update on public.profiles from authenticated;
-    grant insert(id,nom,prenom),update(nom,prenom) on public.profiles to authenticated;`);
+  await db.exec(protection);
   await db.exec(migration);
+  await db.exec(await charger('_optimiser_politiques_espaces.sql'));
+
+  await t.test('La protection conserve les éditions ordinaires et les valeurs initiales', async () => {
+    const profil = await actor(3, (tx) => one(tx,"update public.profiles set telephone='12345678' where id=auth.uid() returning telephone"));
+    assert.equal(profil.telephone,'12345678');
+    const nouveau = await actor(10, (tx) => one(tx,"insert into public.profiles(id,nom) values(auth.uid(),'Profil de test') returning role,actif"));
+    assert.equal(nouveau.role,'ATHLETE');
+    assert.equal(nouveau.actif,true);
+    await denied(() => actor(3, (tx) => tx.query('update public.profiles set id=$1 where id=auth.uid()',[uuid(11)])));
+    await denied(() => actor(11, (tx) => tx.query('insert into public.profiles(id) values($1)',[uuid(12)])));
+    await denied(() => actor(3, (tx) => tx.exec('truncate public.profiles cascade')));
+  });
 
   await t.test('Les tables, vues et fonctions exposent seulement les droits prévus', async () => {
     const tables = await db.query(`select relname,relrowsecurity from pg_class
@@ -66,6 +79,11 @@ test('Contrat SQL des espaces sportifs dans PostgreSQL isolé', async (t) => {
   });
   await t.test('La propriété ne peut pas être transférée', () => denied(() => actor(1, (tx) =>
     tx.query('update public.espace_sportif set id_gestionnaire=$1 where id_espace=$2', [uuid(2), espace.id_espace]))));
+  await t.test('Le lien des séances accepte NULL et refuse un espace inexistant', async () => {
+    await db.exec('insert into public.seance(date) values(current_date)');
+    await db.query('insert into public.seance(date,id_espace_sportif) values(current_date,$1)',[espace.id_espace]);
+    await denied(() => db.exec('insert into public.seance(date,id_espace_sportif) values(current_date,999999)'), '23503');
+  });
   await t.test('Les rôles et indicateurs actifs restent protégés', async () => {
     await denied(() => actor(3, (tx) => tx.exec("update public.profiles set role='ADMIN' where id=auth.uid()")));
     await denied(() => actor(6, (tx) => tx.exec('update public.profiles set actif=true where id=auth.uid()')));
