@@ -67,8 +67,7 @@ class _EspaceDetailScreenState extends State<EspaceDetailScreen> {
       erreur = null;
     });
     try {
-      if (!widget.repository.lecturePublique &&
-          !widget.repository.estConnecte) {
+      if (!widget.repository.estConnecte) {
         if (mounted && numero == requete) {
           setState(() {
             erreur = 'Connectez-vous pour consulter cet espace.';
@@ -76,10 +75,8 @@ class _EspaceDetailScreenState extends State<EspaceDetailScreen> {
         }
         return;
       }
-      final droits = widget.repository.lecturePublique
-          ? null
-          : await widget.repository.getContexte();
-      if (!widget.repository.lecturePublique && droits?.accessible != true) {
+      final droits = await widget.repository.getContexte();
+      if (!droits.accessible) {
         if (mounted && numero == requete) {
           setState(() {
             erreur = 'Votre compte ne permet pas l’accès aux espaces sportifs.';

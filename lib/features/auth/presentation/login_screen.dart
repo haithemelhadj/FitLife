@@ -138,16 +138,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: session.occupe ? null : connecter,
                     child: Text(session.occupe ? 'Connexion…' : 'Se connecter'),
                   ),
-                  const SizedBox(height: 12),
-                  OutlinedButton(
-                    onPressed: session.occupe ? null : session.entrerInvite,
-                    child: const Text('Continuer comme invité'),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Les invités peuvent consulter les espaces publics. Connectez-vous pour utiliser les actions de votre compte.',
-                    textAlign: TextAlign.center,
-                  ),
                 ],
               ),
             ),

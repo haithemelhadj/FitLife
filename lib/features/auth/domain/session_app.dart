@@ -6,7 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../espace_sportif/data/models/enums.dart';
 import '../data/auth_repository.dart';
 
-enum ModeSession { chargement, deconnecte, invite, utilisateur }
+enum ModeSession { chargement, deconnecte, utilisateur }
 
 class SessionApp extends ChangeNotifier {
   final AuthRepository repository;
@@ -44,7 +44,6 @@ class SessionApp extends ChangeNotifier {
   }
 
   Future<void> actualiser() async {
-    if (mode == ModeSession.invite) return;
     final numero = ++revision;
     try {
       final valeur = await repository.roleActif();
@@ -94,24 +93,6 @@ class SessionApp extends ChangeNotifier {
       erreur =
           'Connexion impossible. Vérifiez vos identifiants et votre connexion.';
       return false;
-    } finally {
-      occupe = false;
-      publier();
-    }
-  }
-
-  Future<void> entrerInvite() async {
-    if (occupe) return;
-    occupe = true;
-    erreur = null;
-    revision++;
-    publier();
-    try {
-      await repository.deconnecter();
-      role = null;
-      mode = ModeSession.invite;
-    } catch (_) {
-      erreur = 'Impossible de quitter la session. Réessayez.';
     } finally {
       occupe = false;
       publier();

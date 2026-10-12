@@ -86,7 +86,7 @@ class _EspaceListScreenState extends State<EspaceListScreen> {
       }
     });
     try {
-      if (!repository.lecturePublique && !repository.estConnecte) {
+      if (!repository.estConnecte) {
         if (mounted && numero == requete) {
           setState(() {
             erreur = 'Connectez-vous pour consulter les espaces sportifs.';
@@ -96,10 +96,8 @@ class _EspaceListScreenState extends State<EspaceListScreen> {
         }
         return;
       }
-      final droits = repository.lecturePublique
-          ? null
-          : await repository.getContexte();
-      if (!repository.lecturePublique && droits?.accessible != true) {
+      final droits = await repository.getContexte();
+      if (!droits.accessible) {
         if (mounted && numero == requete) {
           setState(() {
             erreur = 'Votre compte ne permet pas l’accès aux espaces sportifs.';
@@ -110,8 +108,8 @@ class _EspaceListScreenState extends State<EspaceListScreen> {
         return;
       }
       final gestion =
-          droits?.role == RoleEspace.gestionnaire ||
-          droits?.role == RoleEspace.admin;
+          droits.role == RoleEspace.gestionnaire ||
+          droits.role == RoleEspace.admin;
       final resultat = await repository.rechercher(
         recherche: filtreRecherche,
         type: type,
@@ -203,11 +201,6 @@ class _EspaceListScreenState extends State<EspaceListScreen> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(16),
                 children: [
-                  if (repository.lecturePublique)
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 16),
-                      child: Text('Mode invité. Consultation uniquement.'),
-                    ),
                   if (gestion)
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,

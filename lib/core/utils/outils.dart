@@ -126,16 +126,6 @@ Widget elementMenu(
 // Chapitre 5 : Drawer.
 Widget construireDrawer(BuildContext context) {
   final session = SessionScope.peutEtre(context);
-  if (session?.mode == ModeSession.invite) {
-    return Drawer(child: SafeArea(child: ListView(children: [
-      const ListTile(title: Text('FitLife · Invité'), subtitle: Text('Consultation des espaces publics')),
-      elementMenu(context, 'Accueil', Icons.home, '/'),
-      elementMenu(context, 'Espaces sportifs', Icons.sports_handball, '/espaces-sportifs'),
-      ListTile(title: const Text('Se connecter'), leading: const Icon(Icons.login), onTap: () {
-        Navigator.pop(context); session!.quitter();
-      }),
-    ])));
-  }
   return Drawer(
     child: ListView(
       padding: const EdgeInsets.all(12),

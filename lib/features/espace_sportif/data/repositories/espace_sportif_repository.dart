@@ -9,8 +9,6 @@ class EspaceSportifRepository {
 
   EspaceSportifRepository(this.client);
 
-  bool get lecturePublique => false;
-
   bool get estConnecte => client.auth.currentSession != null;
 
   Stream<AuthState> get changementsConnexion => client.auth.onAuthStateChange;

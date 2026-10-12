@@ -97,12 +97,12 @@ void main() {
     expect(await session.connecter('a@example.com', 'test'), false);
     expect(depot.active, false);
   });
-  test('Entrer comme invité supprime la session et les droits admin', () async {
+  test('La déconnexion supprime la session et les droits admin', () async {
     depot.active = true;
     depot.role = RoleEspace.admin;
     await session.initialiser();
-    await session.entrerInvite();
-    expect(session.mode, ModeSession.invite);
+    await session.quitter();
+    expect(session.mode, ModeSession.deconnecte);
     expect(session.administrateur, false);
     expect(depot.active, false);
   });
@@ -116,7 +116,7 @@ void main() {
     expect(session.mode, ModeSession.deconnecte);
   });
 
-  testWidgets('Le formulaire propose les trois modes et valide la saisie', (
+  testWidgets('Le formulaire propose les deux connexions et valide la saisie', (
     tester,
   ) async {
     session.mode = ModeSession.deconnecte;
@@ -128,7 +128,7 @@ void main() {
     );
     expect(find.text('Utilisateur'), findsOneWidget);
     expect(find.text('Administrateur'), findsOneWidget);
-    expect(find.text('Continuer comme invité'), findsOneWidget);
+    expect(find.text('Continuer comme invité'), findsNothing);
     await tester.tap(find.text('Se connecter'));
     await tester.pumpAndSettle();
     expect(find.text('Ce champ est obligatoire.'), findsNWidgets(2));
@@ -151,25 +151,24 @@ void main() {
     await tester.pump();
     expect(find.text('Dashboard'), findsOneWidget);
     session.role = null;
-    session.mode = ModeSession.invite;
+    session.mode = ModeSession.deconnecte;
     session.publier();
     await tester.pump();
     expect(find.text('Dashboard'), findsNothing);
   });
-  testWidgets(
-    'Le tableau de bord refuse aussi une ouverture directe par un invité',
-    (tester) async {
-      session.mode = ModeSession.invite;
-      await tester.pumpWidget(
-        SessionScope(
-          session: session,
-          child: const MaterialApp(
-            home: AccesSession(admin: true, child: Text('Secret')),
-          ),
+  testWidgets('Le tableau de bord refuse aussi une ouverture sans connexion', (
+    tester,
+  ) async {
+    session.mode = ModeSession.deconnecte;
+    await tester.pumpWidget(
+      SessionScope(
+        session: session,
+        child: const MaterialApp(
+          home: AccesSession(admin: true, child: Text('Secret')),
         ),
-      );
-      expect(find.text('Secret'), findsNothing);
-      expect(find.text('Accès réservé aux administrateurs.'), findsOneWidget);
-    },
-  );
+      ),
+    );
+    expect(find.text('Secret'), findsNothing);
+    expect(find.text('Accès réservé aux administrateurs.'), findsOneWidget);
+  });
 }

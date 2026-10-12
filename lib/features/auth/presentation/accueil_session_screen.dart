@@ -8,7 +8,6 @@ class AccueilSessionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final session = SessionScope.of(context);
-    final invite = session.mode == ModeSession.invite;
     return Scaffold(
       appBar: AppBar(title: const Text('FitLife')),
       drawer: construireDrawer(context),
@@ -16,15 +15,11 @@ class AccueilSessionScreen extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         children: [
           Text(
-            invite ? 'Bienvenue, invité' : 'Bienvenue dans FitLife',
+            'Bienvenue dans FitLife',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 16),
-          Text(
-            invite
-                ? 'Consultez les espaces sportifs publics. Connectez-vous pour accéder aux actions de votre compte.'
-                : 'Accédez aux fonctionnalités depuis les boutons et le menu.',
-          ),
+          Text('Accédez aux fonctionnalités depuis les boutons et le menu.'),
           const SizedBox(height: 24),
           FilledButton.icon(
             onPressed: () => Navigator.pushNamed(context, '/espaces-sportifs'),
@@ -42,7 +37,7 @@ class AccueilSessionScreen extends StatelessWidget {
           const SizedBox(height: 24),
           OutlinedButton(
             onPressed: session.occupe ? null : session.quitter,
-            child: Text(invite ? 'Se connecter' : 'Se déconnecter'),
+            child: const Text('Se déconnecter'),
           ),
         ],
       ),
@@ -52,14 +47,8 @@ class AccueilSessionScreen extends StatelessWidget {
 
 class AccesSession extends StatelessWidget {
   final Widget child;
-  final bool invites;
   final bool admin;
-  const AccesSession({
-    super.key,
-    required this.child,
-    this.invites = false,
-    this.admin = false,
-  });
+  const AccesSession({super.key, required this.child, this.admin = false});
   @override
   Widget build(BuildContext context) {
     final session = SessionScope.of(context);
@@ -68,8 +57,7 @@ class AccesSession extends StatelessWidget {
     }
     final autorise = admin
         ? session.administrateur
-        : session.mode == ModeSession.utilisateur ||
-              (invites && session.mode == ModeSession.invite);
+        : session.mode == ModeSession.utilisateur;
     if (autorise) return child;
     return Scaffold(
       appBar: AppBar(title: const Text('Accès limité')),

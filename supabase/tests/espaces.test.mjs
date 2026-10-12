@@ -202,25 +202,12 @@ test('Contrat SQL des espaces sportifs dans PostgreSQL isolé', async (t) => {
   });
 
   await db.exec(await charger('_dashboard_admin_espaces.sql'));
-  await db.exec(await charger('_acces_invite_espaces.sql'));
   const invite = (fn) => db.transaction(async (tx) => {
     await tx.exec('set local role anon');
     await tx.exec("select set_config('request.jwt.claims','{}',true)");
     return fn(tx);
   });
-  await t.test('Le catalogue public ne divulgue ni propriétaire ni espace inactif', async () => {
-    await actor(2,(tx)=>tx.query("update public.espace_sportif set statut='INACTIF' where id_espace=$1",[autreEspace.id_espace]));
-    const resultat=(await invite((tx)=>one(tx,'select public.consulter_espaces_publics() as espaces'))).espaces;
-    assert.equal(resultat.length,1);
-    assert.equal(resultat[0].id_espace,espace.id_espace);
-    assert.equal(Object.hasOwn(resultat[0],'id_gestionnaire'),false);
-    const absent=(await invite((tx)=>one(tx,"select public.consulter_espaces_publics(p_id=>$1) as espaces",[autreEspace.id_espace]))).espaces;
-    assert.deepEqual(absent,[]);
-    await db.query('update public.profiles set actif=false where id=$1',[uuid(1)]);
-    assert.deepEqual((await invite((tx)=>one(tx,'select public.consulter_espaces_publics() as espaces'))).espaces,[]);
-    await db.query('update public.profiles set actif=true where id=$1',[uuid(1)]);
-  });
-  await t.test('L’invité ne lit aucune table privée et ne peut pas écrire', async () => {
+  await t.test('Un visiteur sans connexion ne lit aucune table et ne peut pas écrire', async () => {
     for (const table of ['espace_sportif','equipement','disponibilite_espace','offre','abonnement']) {
       await denied(()=>invite((tx)=>tx.exec('select * from public.'+table)));
     }
@@ -228,7 +215,6 @@ test('Contrat SQL des espaces sportifs dans PostgreSQL isolé', async (t) => {
     await denied(()=>invite((tx)=>tx.exec("update public.espace_sportif set statut='ACTIF'")));
     await denied(()=>invite((tx)=>tx.exec('select public.resume_admin_espaces()')));
     await denied(()=>invite((tx)=>tx.query('select public.souscrire_offre($1)',[offre.id_offre])));
-    await denied(()=>invite((tx)=>tx.exec('select public.consulter_espaces_publics(p_limite=>101)')),'22023');
   });
   await t.test('Les statistiques nécessitent un administrateur actif', async () => {
     for (const id of [1,3,6]) await denied(()=>actor(id,(tx)=>tx.exec('select public.resume_admin_espaces()')));

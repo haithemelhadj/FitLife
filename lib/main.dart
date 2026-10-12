@@ -6,7 +6,6 @@ import 'features/auth/data/auth_repository.dart';
 import 'features/auth/domain/session_app.dart';
 import 'features/auth/presentation/login_screen.dart';
 import 'features/auth/presentation/accueil_session_screen.dart';
-import 'features/espace_sportif/data/repositories/espace_public_repository.dart';
 import 'features/espace_sportif/presentation/admin/dashboard_espaces_screen.dart';
 import 'features/espace_sportif/presentation/espaces/espace_list_screen.dart';
 import 'features/evenement/presentation/categories/categorie_list_screen.dart';
@@ -91,18 +90,13 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/connexion': (context) => const LoginScreen(),
           '/': (context) =>
-              const AccesSession(invites: true, child: AccueilSessionScreen()),
+              const AccesSession(child: AccueilSessionScreen()),
           '/dashboard': (context) => AccesSession(
             admin: true,
             child: DashboardEspacesScreen(client: Supabase.instance.client),
           ),
           '/espaces-sportifs': (context) => AccesSession(
-            invites: true,
-            child: EspaceListScreen(
-              repository: SessionScope.of(context).mode == ModeSession.invite
-                  ? EspacePublicRepository(Supabase.instance.client)
-                  : null,
-            ),
+            child: const EspaceListScreen(),
           ),
           '/evenements': (context) =>
               const AccesSession(child: EvenementListScreen()),
