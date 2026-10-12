@@ -22,9 +22,33 @@ class AccueilSessionScreen extends StatelessWidget {
           Text('Accédez aux fonctionnalités depuis les boutons et le menu.'),
           const SizedBox(height: 24),
           FilledButton.icon(
+            onPressed: () => Navigator.pushNamed(context, '/entrainement-bas'),
+            icon: const Icon(Icons.fitness_center),
+            label: const Text('Entraînement & séances'),
+          ),
+          const SizedBox(height: 16),
+          FilledButton.icon(
             onPressed: () => Navigator.pushNamed(context, '/espaces-sportifs'),
             icon: const Icon(Icons.sports_handball),
             label: const Text('Espaces sportifs'),
+          ),
+          const SizedBox(height: 16),
+          FilledButton.icon(
+            onPressed: () => Navigator.pushNamed(context, '/evenements'),
+            icon: const Icon(Icons.event),
+            label: const Text('Événements sportifs'),
+          ),
+          const SizedBox(height: 16),
+          FilledButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.restaurant),
+            label: const Text('Nutrition & suivi'),
+          ),
+          const SizedBox(height: 16),
+          FilledButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.person),
+            label: const Text('Mon compte / Profil'),
           ),
           if (session.administrateur) ...[
             const SizedBox(height: 16),
